@@ -1,0 +1,19 @@
+{
+    "require": {
+        "slim/slim": "3.0",
+        "illuminate/database": "*",
+        "ext-json": "*"
+    },
+    "authors": [
+        {
+            "name": "Camilo Alaniz",
+            "email": "kmilo93sd@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+             "Cartago\\": "src/"
+        }
+    }
+
+}
