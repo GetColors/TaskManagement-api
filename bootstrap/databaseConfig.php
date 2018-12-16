@@ -6,7 +6,7 @@ define('DB_CONFIG', array(
 	'host' => 'localhost',
 	'database' => 'cartago',
 	'username' => 'root',
-	'password' => '',
+	'password' => '000000',
 
 	'charset' => 'utf8',
 	'collation' => 'utf8_unicode_ci',

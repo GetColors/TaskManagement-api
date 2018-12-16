@@ -1,6 +1,6 @@
 <?php
 
-namespace Babilonia\Infrastructure\Uuid;
+namespace Cartago\Infrastructure\Uuid;
 
 class UuidGenerator
 {
