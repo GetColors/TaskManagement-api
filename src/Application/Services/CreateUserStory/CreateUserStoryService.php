@@ -16,8 +16,8 @@ class CreateUserStoryService
 
     public function execute(CreateUserStoryRequest $request):void
     {
-        $newUserStory = new UserStory($request->uuid(), $request->name());
+        $newUserStory = new UserStory($request->id(), $request->name());
 
-        $this->userStoryRepository->save($newUserStory);
+        $this->userStoryRepository->create($newUserStory);
     }
 }

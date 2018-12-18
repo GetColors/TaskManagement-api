@@ -8,14 +8,19 @@ class EloquentUserStory extends Model
 {
     protected $table = 'user_stories';
 
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'uuid',
+        'id',
         'name'
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(EloquentTask::class);
+    }
 }

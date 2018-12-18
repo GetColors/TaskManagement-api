@@ -4,19 +4,19 @@ namespace Cartago\Application\Services\CreateUserStory;
 
 class CreateUserStoryRequest
 {
-    private $uuid;
+    private $id;
 
     private $name;
 
-    public function __construct(?string $uuid, ?string $name)
+    public function __construct(?string $id, ?string $name)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
         $this->name = $name;
     }
 
-    public function uuid():?string
+    public function id():?string
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function name():?string

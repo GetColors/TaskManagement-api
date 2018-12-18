@@ -17,7 +17,7 @@ class NewUserStoryController extends Controller
     {
         $parameters = $request->getParsedBody();
 
-        $createUserStoryRequest = new CreateUserStoryRequest( UuidGenerator::generate(),$parameters['name']);
+        $createUserStoryRequest = new CreateUserStoryRequest( $parameters['id'],$parameters['name']);
 
         $createUserStoryService = new CreateUserStoryService(new EloquentUserStoriesRepository());
 
@@ -28,7 +28,7 @@ class NewUserStoryController extends Controller
 
         }catch (UuidCollisionException $exception){
 
-            $this->create($request,$response);
+            return $response->withJson(['errors' => 'The provided id is already in use.'], 400);
         }
     }
 }
