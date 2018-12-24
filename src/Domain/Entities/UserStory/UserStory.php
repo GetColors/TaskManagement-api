@@ -2,7 +2,9 @@
 
 namespace Cartago\Domain\Entities\UserStory;
 
-use Cartago\Domain\Entities\Task\Task;
+use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriteria;
+use Cartago\Domain\Entities\Product\ProductId;
+use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriterias;
 
 class UserStory
 {
@@ -10,31 +12,54 @@ class UserStory
 
     protected $name;
 
-    protected $tasks = array();
+    protected $description;
 
-    public function __construct(string $id, string $name)
+    protected $productId;
+
+    protected $acceptanceCriterias;
+
+    public function __construct(
+        UserStoryId $userStoryId,
+        UserStoryName $userStoryName,
+        UserStoryDescription $userStoryDescription,
+        ProductId $productId
+    )
     {
-        $this->id = $id;
-        $this->name = $name;
+        $this->id = $userStoryId;
+        $this->name = $userStoryName;
+        $this->description = $userStoryDescription;
+        $this->productId = $productId;
+        $this->acceptanceCriterias = new AcceptanceCriterias();
     }
 
-    public function id():string
+    public function id():UserStoryId
     {
         return $this->id;
     }
 
-    public function name():string
+    public function name():UserStoryName
     {
         return $this->name;
     }
 
-    public function addTask(Task $task):void
+    public function description():UserStoryDescription
     {
-        $this->tasks [] = $task;
+        return $this->description;
     }
 
-    public function tasks():?array
+    public function productId():ProductId
     {
-        return $this->tasks;
+        return $this->productId;
     }
+
+    public function acceptanceCriterias():AcceptanceCriterias
+    {
+        return $this->acceptanceCriterias;
+    }
+
+    public function addAcceptanceCriteria(AcceptanceCriteria $acceptanceCriteria):void
+    {
+        $this->acceptanceCriterias->add($acceptanceCriteria);
+    }
+
 }

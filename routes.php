@@ -2,7 +2,8 @@
 
 $app->get('/', 'IndexApiController:index');
 
-$app->post('/tasks/create', 'NewTaskController:create');
+$app->put('/user-stories/{userStoryId}/tasks', 'NewTaskController:create');
 
-$app->post('/user-stories/create', 'NewUserStoryController:create');
+$app->post('/user-stories', 'NewUserStoryController:create');
+
 
