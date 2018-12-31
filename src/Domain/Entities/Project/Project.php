@@ -2,7 +2,7 @@
 
 namespace Cartago\Domain\Entities\Project;
 
-use Cartago\Domain\Entities\User\User;
+use Cartago\Domain\Entities\User\UserId;
 
 class Project
 {
@@ -12,19 +12,19 @@ class Project
 
     protected $description;
 
-    protected $owner;
+    protected $ownerId;
 
     public function __construct(
         ProjectId $id,
         ProjectName $name,
         ProjectDescription $description,
-        User $owner
+        UserId $ownerId
     )
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
-        $this->owner = $owner;
+        $this->ownerId = $ownerId;
     }
 
     public function id():ProjectId
@@ -42,15 +42,15 @@ class Project
         return $this->description;
     }
 
-    public function owner():User
+    public function ownerId():UserId
     {
-        return $this->owner;
+        return $this->ownerId;
     }
 
-    public function userIsOwnerOrFail(User $user)
+    public function userIsOwnerOrFail(UserId $userId)
     {
-        if ($this->owner()->id() !== $user->id()){
-            throw new BadPermissionsException("The user with id : " . $user->id() . " is not the owner of project " . $this->owner->id());
+        if ($this->ownerId->get()!== $userId->get()){
+            throw new BadPermissionsException("The user with id : " . $userId->get() . " is not the owner of project " . $this->id->get());
         }
     }
 }

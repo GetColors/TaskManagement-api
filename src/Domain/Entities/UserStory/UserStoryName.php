@@ -19,6 +19,9 @@ class UserStoryName
         if (empty($name)){
             throw new \InvalidArgumentException("User story name cannot be empty.");
         }
+        if (strlen($name) < 4){
+            throw new \InvalidArgumentException("User story must have a minimum of 4 characters.");
+        }
 
         $this->name = $name;
     }

@@ -2,43 +2,49 @@
 
 namespace Cartago\Domain\Entities\Task;
 
+use Cartago\Domain\Entities\UserStory\UserStoryId;
+
 class Task
 {
     protected $id;
-
-    protected $name;
 
     protected $description;
 
     protected $userStoryId;
 
+    protected $state = TaskStates::INCOMPLETE;
+
     public function __construct(
-        string $id, string $name, string $description, string $userStoryId
+        TaskId $id,  TaskDescription $description, UserStoryId $userStoryId
     )
     {
         $this->id = $id;
-        $this->name = $name;
         $this->description = $description;
         $this->userStoryId = $userStoryId;
     }
 
-    public function id():string
+    public function id():TaskId
     {
         return $this->id;
     }
 
-    public function name():string
-    {
-        return $this->name;
-    }
-
-    public function description():string
+    public function description():TaskDescription
     {
         return $this->description;
     }
 
-    public function userStoryId():string
+    public function userStoryId():UserStoryId
     {
         return $this->userStoryId;
+    }
+
+    public function markAsComplete():void
+    {
+        $this->state = TaskStates::COMPLETE;
+    }
+
+    public function isComplete():bool
+    {
+        return $this->state === TaskStates::COMPLETE;
     }
 }

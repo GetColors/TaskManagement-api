@@ -6,12 +6,12 @@ class AcceptanceCriteriaId
 {
     protected $id;
 
-    public function __construct(string $id)
+    public function __construct(?string $id)
     {
         $this->setId($id);
     }
 
-    protected function setId(string $id): void
+    protected function setId(?string $id): void
     {
         if (is_null($id)){
             throw new \InvalidArgumentException("Acceptance criteria id cannot be null.");
@@ -35,6 +35,6 @@ class AcceptanceCriteriaId
 
     public function equalsTo(AcceptanceCriteriaId $id):bool
     {
-        return $this->id === $id;
+        return $this->id === $id->get();
     }
 }

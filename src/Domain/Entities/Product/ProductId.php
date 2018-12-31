@@ -11,7 +11,7 @@ class ProductId
         $this->setId($id);
     }
 
-    protected function setId(string $id): void
+    protected function setId(?string $id): void
     {
         if (is_null($id)){
             throw new \InvalidArgumentException("Product id cannot be null.");

@@ -11,7 +11,7 @@ class ProjectId
         $this->setId($id);
     }
 
-    protected function setId(string $id): void
+    protected function setId(?string $id): void
     {
         if (is_null($id)){
             throw new \InvalidArgumentException("Project id cannot be null.");
@@ -24,7 +24,12 @@ class ProjectId
         $this->id = $id;
     }
 
-    public function id():string
+    public function get():string
+    {
+        return $this->id;
+    }
+
+    public function __toString()
     {
         return $this->id;
     }

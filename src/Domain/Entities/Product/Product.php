@@ -2,8 +2,7 @@
 
 namespace Cartago\Domain\Entities\Product;
 
-use Cartago\Domain\Entities\User\User;
-use Cartago\Domain\Entities\Project\Project;
+use Cartago\Domain\Entities\Project\ProjectId;
 use Cartago\Domain\Entities\UserStory\UserStory;
 use Cartago\Domain\Entities\UserStory\UserStoryId;
 use Cartago\Domain\Entities\UserStory\UserStoryName;
@@ -18,9 +17,7 @@ class Product
 
     protected $description;
 
-    protected $owner;
-
-    protected $project;
+    protected $projectId;
 
     protected $userStories = array();
 
@@ -28,15 +25,13 @@ class Product
         ProductId $id,
         ProductName $name,
         ProductDescription $description,
-        User $owner,
-        Project $project
+        ProjectId $projectId
     )
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
-        $this->owner = $owner;
-        $this->project = $project;
+        $this->projectId = $projectId;
     }
 
     public function id():ProductId
@@ -54,34 +49,21 @@ class Product
         return $this->description;
     }
 
-    public function owner():User
+    public function projectId():ProjectId
     {
-        return $this->owner;
-    }
-
-    public function project():Project
-    {
-        return $this->project;
+        return $this->projectId;
     }
 
     public function addUserStory(
-        UserStoryId $userStoryId,
-        UserStoryName $userStoryName,
-        UserStoryDescription $userStoryDescription,
-        AcceptanceCriterias $acceptantCriterias
+        UserStory $userStory
     )
     {
-        $newUserStory = new UserStory(
-            $userStoryId,
-            $userStoryName,
-            $userStoryDescription,
-            $this->id()
-        );
 
-        foreach ($acceptantCriterias as $acceptantCriteria){
-            $newUserStory->addAcceptanceCriteria($acceptantCriteria);
-        }
+        $this->userStories [] = $userStory;
+    }
 
-        $this->userStories [] = $newUserStory;
+    public function userStories()
+    {
+        return $this->userStories;
     }
 }

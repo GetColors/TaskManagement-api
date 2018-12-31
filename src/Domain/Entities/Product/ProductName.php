@@ -19,6 +19,9 @@ class ProductName
         if (empty($name)){
             throw new \InvalidArgumentException("Product name cannot be empty");
         }
+        if (strlen($name) < 4){
+            throw new \InvalidArgumentException("Product name must have a minimum of 4 characters.");
+        }
         $this->name = $name;
     }
 

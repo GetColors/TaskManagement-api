@@ -31,9 +31,7 @@ class CreateUserStoryService
 
         $project = $this->projectRepository->byIdOrFail($request->projectId());
 
-        $user = $this->userRepository->byIdOrFail($request->userId());
-
-        $project->userIsOwnerOrFail($user);
+        $project->userIsOwnerOrFail($request->userId());
 
         $product->addUserStory(
             $request->userStoryId(),
@@ -41,6 +39,7 @@ class CreateUserStoryService
             $request->userStoryDescription(),
             $request->acceptanceCriterias()
         );
+
 
         $this->productRepository->save($product);
     }

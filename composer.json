@@ -14,6 +14,8 @@
         "psr-4": {
              "Cartago\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
     }
-
 }

@@ -11,7 +11,7 @@ use Cartago\Domain\Entities\UserStory\UserStoryDescription;
 use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriteria;
 use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriterias;
 use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriteriaId;
-use Cartago\Domain\Entities\AcceptanceCriteria\AcceptantCriteriaDescription;
+use Cartago\Domain\Entities\AcceptanceCriteria\AcceptanceCriteriaDescription;
 
 class CreateUserStoryRequest
 {
@@ -55,7 +55,7 @@ class CreateUserStoryRequest
         foreach ($acceptanceCriteriasArray as $acceptanceCriteria){
             $acceptanceCriterias->add(new AcceptanceCriteria(
                 new AcceptanceCriteriaId($acceptanceCriteria['id']),
-                new AcceptantCriteriaDescription($acceptanceCriteria['description']),
+                new AcceptanceCriteriaDescription($acceptanceCriteria['description']),
                 new UserStoryId($acceptanceCriteria['userStoryId'])
             ));
         }

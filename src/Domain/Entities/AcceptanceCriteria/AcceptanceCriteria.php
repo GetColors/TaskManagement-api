@@ -10,16 +10,15 @@ class AcceptanceCriteria
 
     protected $description;
 
+    protected $state = AcceptanceCriteriaStates::PENDING;
+
     protected $userStoryId;
 
-    protected $isAccepted;
-
-    public function __construct(AcceptanceCriteriaId $id, AcceptantCriteriaDescription $description, UserStoryId $userStoryId)
+    public function __construct(AcceptanceCriteriaId $id, AcceptanceCriteriaDescription $description, UserStoryId $userStoryId)
     {
         $this->id = $id;
         $this->description = $description;
         $this->userStoryId = $userStoryId;
-        $this->isAccepted = false;
     }
 
     public function id():AcceptanceCriteriaId
@@ -27,7 +26,7 @@ class AcceptanceCriteria
         return $this->id;
     }
 
-    public function description():AcceptantCriteriaDescription
+    public function description():AcceptanceCriteriaDescription
     {
         return $this->description;
     }
@@ -37,13 +36,28 @@ class AcceptanceCriteria
         return $this->userStoryId;
     }
 
-    public function isAccepted():bool
-    {
-        return $this->isAccepted;
-    }
-
     public function accept():void
     {
-        $this->isAccepted = true;
+        $this->state = AcceptanceCriteriaStates::ACCEPTED;
+    }
+
+    public function isAccepted():bool
+    {
+        return $this->state === AcceptanceCriteriaStates::ACCEPTED;
+    }
+
+    public function reject():void
+    {
+        $this->state = AcceptanceCriteriaStates::REJECTED;
+    }
+
+    public function isRejected():bool
+    {
+        return $this->state === AcceptanceCriteriaStates::REJECTED;
+    }
+
+    public function isPending():bool
+    {
+        return $this->state === AcceptanceCriteriaStates::PENDING;
     }
 }

@@ -6,12 +6,12 @@ class ProductDescription
 {
     protected $description;
 
-    public function __construct(string $description)
+    public function __construct(?string $description)
     {
         $this->setDescription($description);
     }
 
-    protected function setDescription(string $description): void
+    protected function setDescription(?string $description): void
     {
         if (is_null($description)){
             throw new \InvalidArgumentException("Product description cannot be null.");
