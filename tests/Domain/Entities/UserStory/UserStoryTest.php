@@ -203,4 +203,125 @@ class UserStoryTest extends TestCase
 
         $this->assertTrue($expectedAdvance === $actualAdvance);
     }
+
+    /**
+     * @test
+     */
+    public function shouldDecreaseTheAdvancePercentageWhenTaskIsAdded()
+    {
+        $userStory = new UserStory(
+            new UserStoryId("aaa"),
+            new UserStoryName("userStory"),
+            new UserStoryDescription("description"),
+            new ProductId("bbb")
+        );
+        $taskId = "aaa";
+        $taskDescription = "do do do do do";
+        $userStory->addTask(
+            new Task(
+                new TaskId($taskId),
+                new TaskDescription($taskDescription),
+                $userStory->id()
+            )
+        );
+        $userStory->completeTaskOfId(new TaskId("aaa"));
+
+        $previousAdvance = $userStory->advance();
+
+        $taskId = "ccc";
+        $taskDescription = "do do do do do";
+        $userStory->addTask(
+            new Task(
+                new TaskId($taskId),
+                new TaskDescription($taskDescription),
+                $userStory->id()
+            )
+        );
+
+        $actualAdvance = $userStory->advance();
+
+        $this->assertTrue($previousAdvance > $actualAdvance);
+
+        $expectedAdvance = 0.5;
+
+        $this->assertTrue($expectedAdvance === $actualAdvance);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDecreaseTheAdvancePercentageWhenTaskIsMarkAsIncomplete()
+    {
+        $userStory = new UserStory(
+            new UserStoryId("aaa"),
+            new UserStoryName("userStory"),
+            new UserStoryDescription("description"),
+            new ProductId("bbb")
+        );
+        $taskId = "aaa";
+        $taskDescription = "do do do do do";
+        $userStory->addTask(
+            new Task(
+                new TaskId($taskId),
+                new TaskDescription($taskDescription),
+                $userStory->id()
+            )
+        );
+        $userStory->completeTaskOfId(new TaskId("aaa"));
+
+        $previousAdvance = $userStory->advance();
+
+        $userStory->notCompleteTaskOfId(new TaskId("aaa"));
+
+        $actualAdvance = $userStory->advance();
+
+        $this->assertTrue($previousAdvance > $actualAdvance);
+
+        $expectedAdvance = (float)0;
+
+        $this->assertTrue($expectedAdvance === $actualAdvance);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldIncreaseTheAdvancePercentageWhenIncompleteTaskIsRemoved()
+    {
+        $userStory = new UserStory(
+            new UserStoryId("aaa"),
+            new UserStoryName("userStory"),
+            new UserStoryDescription("description"),
+            new ProductId("bbb")
+        );
+        $taskId = "aaa";
+        $taskDescription = "do do do do do";
+        $userStory->addTask(
+            new Task(
+                new TaskId($taskId),
+                new TaskDescription($taskDescription),
+                $userStory->id()
+            )
+        );
+        $anotherTaskId = "ccc";
+        $userStory->addTask(
+            new Task(
+                new TaskId($anotherTaskId),
+                new TaskDescription($taskDescription),
+                $userStory->id()
+            )
+        );
+        $userStory->completeTaskOfId(new TaskId("aaa"));
+
+        $previousAdvance = $userStory->advance();
+
+        $userStory->removeTaskOfId(new TaskId("ccc"));
+
+        $actualAdvance = $userStory->advance();
+
+        $this->assertTrue($previousAdvance < $actualAdvance);
+
+        $expectedAdvance = (float)1;
+
+        $this->assertTrue($expectedAdvance === $actualAdvance);
+    }
 }

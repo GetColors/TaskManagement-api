@@ -43,8 +43,13 @@ class Task
         $this->state = TaskStates::COMPLETE;
     }
 
-    public function isComplete():bool
+    public function isCompleted():bool
     {
         return $this->state === TaskStates::COMPLETE;
+    }
+
+    public function markAsInComplete():void
+    {
+        $this->state = TaskStates::INCOMPLETE;
     }
 }

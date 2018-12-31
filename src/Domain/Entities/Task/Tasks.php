@@ -31,4 +31,13 @@ class Tasks implements \IteratorAggregate
     {
         return new \ArrayIterator($this->tasks);
     }
+
+    public function remove(TaskId $id):void
+    {
+        foreach ($this->tasks as $key => $task){
+            if ($task->id()->equalsTo($id)){
+                unset($this->tasks[$key]);
+            }
+        }
+    }
 }

@@ -103,7 +103,7 @@ class UserStory
         $completedTasks = 0;
 
         foreach ($this->tasks as $task){
-            if ($task->isComplete()){
+            if ($task->isCompleted()){
                 $completedTasks ++;
             }
         }
@@ -119,11 +119,24 @@ class UserStory
     public function addTask(Task $task):void
     {
         $this->tasks->add($task);
+        $this->refreshAdvancedPercentage();
     }
 
     public function completeTaskOfId(TaskId $id)
     {
         $this->tasks->byId($id)->markAsComplete();
+        $this->refreshAdvancedPercentage();
+    }
+
+    public function notCompleteTaskOfId(TaskId $id):void
+    {
+        $this->tasks->byId($id)->markAsIncomplete();
+        $this->refreshAdvancedPercentage();
+    }
+
+    public function removeTaskOfId(TaskId $id)
+    {
+        $this->tasks->remove($id);
         $this->refreshAdvancedPercentage();
     }
 }
