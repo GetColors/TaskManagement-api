@@ -69,6 +69,7 @@ class UserStory
     public function addAcceptanceCriteria(AcceptanceCriteria $acceptanceCriteria):void
     {
         $this->acceptanceCriterias->add($acceptanceCriteria);
+        $this->refreshAdvancedPercentage();
     }
 
     public function advance():float

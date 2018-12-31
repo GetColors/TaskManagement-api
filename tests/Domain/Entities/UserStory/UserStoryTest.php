@@ -2,12 +2,12 @@
 
 namespace Domain\Entities\UserStory;
 
-use Cartago\Domain\Entities\Task\Task;
-use Cartago\Domain\Entities\Task\TaskDescription;
-use Cartago\Domain\Entities\Task\TaskId;
 use PHPUnit\Framework\TestCase;
+use Cartago\Domain\Entities\Task\Task;
+use Cartago\Domain\Entities\Task\TaskId;
 use Cartago\Domain\Entities\Product\ProductId;
 use Cartago\Domain\Entities\UserStory\UserStory;
+use Cartago\Domain\Entities\Task\TaskDescription;
 use Cartago\Domain\Entities\UserStory\UserStoryId;
 use Cartago\Domain\Entities\UserStory\UserStoryName;
 use Cartago\Domain\Entities\UserStory\UserStoryDescription;
@@ -116,7 +116,7 @@ class UserStoryTest extends TestCase
     /**
      * @test
     */
-    public function shouldHaveTheSameAdvancePercentageWhenAcceptanceCriteriaIsAdded()
+    public function shouldMaintainTheAdvancePercentageWhenAcceptanceCriteriaIsAddedAndListIsEmpty()
     {
         $userStory = new UserStory(
             new UserStoryId("aaa"),
@@ -125,6 +125,7 @@ class UserStoryTest extends TestCase
             new ProductId("bbb")
         );
 
+        $this->assertTrue($userStory->acceptanceCriterias()->size() === 0);
 
         $previousAdvance = $userStory->advance();
 
@@ -139,6 +140,44 @@ class UserStoryTest extends TestCase
         $actualAdvance = $userStory->advance();
 
         $this->assertTrue($previousAdvance === $actualAdvance);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDecreaseTheAdvancePercentageWhenAcceptanceCriteriaIsAddedAndHaveAcceptedInList()
+    {
+        $userStory = new UserStory(
+            new UserStoryId("aaa"),
+            new UserStoryName("userStory"),
+            new UserStoryDescription("description"),
+            new ProductId("bbb")
+        );
+
+        $userStory->addAcceptanceCriteria(
+            new AcceptanceCriteria(
+                new AcceptanceCriteriaId("aaa"),
+                new AcceptanceCriteriaDescription("aaaaaaaa"),
+                new UserStoryId($userStory->id())
+            )
+        );
+        $userStory->acceptAcceptanceCriteriaOfId(new AcceptanceCriteriaId("aaa"));
+
+        $previousAdvance = $userStory->advance();
+
+        $this->assertTrue($previousAdvance > (float)0);
+
+        $userStory->addAcceptanceCriteria(
+            new AcceptanceCriteria(
+                new AcceptanceCriteriaId("bbb"),
+                new AcceptanceCriteriaDescription("aaaaaaaa"),
+                new UserStoryId($userStory->id())
+            )
+        );
+
+        $actualAdvance = $userStory->advance();
+
+        $this->assertTrue($actualAdvance < $previousAdvance);
     }
 
     /**
