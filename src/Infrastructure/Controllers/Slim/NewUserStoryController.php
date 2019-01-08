@@ -15,6 +15,7 @@ class NewUserStoryController extends Controller
 {
     public function create(Request $request, Response $response)
     {
+        /*
         $parameters = $request->getParsedBody();
 
         $createUserStoryRequest = new CreateUserStoryRequest( $parameters['id'],$parameters['name']);
@@ -29,6 +30,6 @@ class NewUserStoryController extends Controller
         }catch (UuidCollisionException $exception){
 
             return $response->withJson(['errors' => 'The provided id is already in use.'], 400);
-        }
+        }*/
     }
 }
