@@ -34,4 +34,13 @@ class ProductName
     {
         return $this->name;
     }
+
+    public function equalsTo(ProductName $productName):bool
+    {
+        if ($this->name === $productName->get()){
+            return true;
+        }
+
+        return false;
+    }
 }

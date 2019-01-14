@@ -27,7 +27,7 @@ class ProjectName
         $this->name = $name;
     }
 
-    public function name():string
+    public function get():string
     {
         return $this->name;
     }

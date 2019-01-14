@@ -1,6 +1,6 @@
 <?php
 
-namespace Cartago\Application\UseCases\CreateProject;
+namespace Cartago\Domain\Entities\Project;
 
 class ProjectIdAlreadyExistException extends \Exception
 {

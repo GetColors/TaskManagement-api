@@ -3,41 +3,35 @@
 namespace Cartago\Application\UseCases\CreateProduct;
 
 use Cartago\Domain\Entities\Product\Product;
+use Cartago\Domain\Entities\Product\ProductNameAlreadyExistException;
 use Cartago\Domain\Entities\Product\ProductRepository;
 use Cartago\Domain\Entities\Project\ProjectRepository;
 use Cartago\Domain\Entities\User\UserRepository;
 
-class CreateProductUseCase
+final class CreateProductUseCase
 {
-    private $userRepository;
-    private $projectRepository;
     private $productRepository;
 
     public function __construct(
-        UserRepository $userRepository,
-        ProjectRepository $projectRepository,
         ProductRepository $productRepository
     )
     {
-        $this->userRepository = $userRepository;
-        $this->projectRepository = $projectRepository;
         $this->productRepository = $productRepository;
     }
 
     public function execute(CreateProductRequest $request)
     {
+        $foundedProduct = $this->productRepository->findByNameInProject($request->productName(), $request->projectId());
 
-        $user = $this->userRepository->byIdOrFail($request->userId());
-        $project = $this->projectRepository->byIdOrFail($request->projectId());
-
-        $project->userIsOwnerOrFail($user);
+        if (!is_null($foundedProduct)){
+            throw new ProductNameAlreadyExistException("Product name is already in use in project.");
+        }
 
         $product = new Product(
             $request->productId(),
             $request->productName(),
             $request->productDescription(),
-            $user,
-            $project
+            $request->projectId()
         );
 
         $this->productRepository->create($product);

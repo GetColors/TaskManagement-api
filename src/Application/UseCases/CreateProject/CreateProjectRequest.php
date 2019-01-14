@@ -38,7 +38,7 @@ class CreateProjectRequest
 
     public function projectName():ProjectName
     {
-        return $this->projectName();
+        return $this->projectName;
     }
 
     public function projectDescription():ProjectDescription

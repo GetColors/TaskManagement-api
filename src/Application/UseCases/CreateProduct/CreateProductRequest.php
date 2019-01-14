@@ -11,40 +11,27 @@ use Cartago\Domain\Entities\User\UserId;
 
 class CreateProductRequest
 {
-    protected $userId;
-
-    protected $projectId;
-
     protected $productId;
 
     protected $productName;
 
     protected $productDescription;
 
+    protected $projectId;
+
     public function __construct(
-        string $userId,
-        string $projectId,
         string $productId,
         string $productName,
-        string $productDescription
+        string $productDescription,
+        string $projectId
     )
     {
-        $this->userId = new UserId($userId);
-        $this->projectId = new ProjectId($projectId);
         $this->productId = new ProductId($productId);
         $this->productName = new ProductName($productName);
         $this->productDescription = new ProductDescription($productDescription);
+        $this->projectId = new ProjectId($projectId);
     }
 
-    public function userId():UserId
-    {
-        return $this->userId;
-    }
-
-    public function projectId():ProjectId
-    {
-        return $this->projectId;
-    }
 
     public function productId():ProductId
     {
@@ -59,5 +46,10 @@ class CreateProductRequest
     public function productDescription():ProductDescription
     {
         return $this->productDescription;
+    }
+
+    public function projectId():ProjectId
+    {
+        return $this->projectId;
     }
 }

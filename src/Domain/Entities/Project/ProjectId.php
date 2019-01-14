@@ -33,4 +33,13 @@ class ProjectId
     {
         return $this->id;
     }
+
+    public function equalsTo(ProjectId $projectId):bool
+    {
+        if ($projectId->get() === $this->id){
+            return true;
+        }
+
+        return false;
+    }
 }
